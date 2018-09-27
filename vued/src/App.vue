@@ -27,7 +27,7 @@ export default {
       this.todoItems = [];
     },
 		addTodo(todoItem) {
-			localStorage.setItem(todoItem, {'context':todoItem, 'isComplete':false});
+      localStorage.setItem(todoItem, JSON.stringify({'context':todoItem, 'isComplete':false}));
 			this.todoItems.push({'context':todoItem, 'isComplete':false});
 		},
     removeTodo(todoItem, index) {
@@ -36,19 +36,19 @@ export default {
     },
     // Todo 상태를 변경시키기 위한 함수
     completeTodo(todoItem, index){
-      localStorage.setItem(todoItem, {'context':todoItem, 'isComplete':true});
+      localStorage.setItem(todoItem,JSON.stringify({'context':todoItem, 'isComplete':true}));//로컬스토리지에 들어갈때 string으로 변환되기 때문에 json를 사용하여 객체를 주고 받는다.
       this.todoItems[index]['isComplete'] = true; //todoItems에 들어있는 Data의 Index를 조회하고 isComplete 키 값의 Value 데이터를 true로 변경시킨다.
     }
   },
   created() {
 		if (localStorage.length > 0) {
 			for (var i = 0; i < localStorage.length; i++) {
-        // Dict (딕셔너리)) Key:Value
-        // context : localStorage.Key(i) => 할일 문자열
+        // Dict (딕셔너리) Key:Value
+        // context : localStorage.Key(i) => 할 일 문자열
         // isComplete : false => Boolean
-				this.todoItems.push({'context':localStorage.key(i), 'isComplete':false});
-        
-			}
+        this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+				//this.todoItems.push({'context':localStorage.key(i), 'isComplete':true});
+      }
 		}
   },
   components: {

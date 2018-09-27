@@ -5,7 +5,6 @@
         <span class="checkBtn" type="button" @click="completeTodo(todoItem.context, index)">
           <i class="fas fa-check" aria-hidden="true"></i>
         </span>
-        
         <!-- div에 v-if 조건절을 추가하여 todoItme의 isComplete 키 값이 false 일 경우와 true 일 경우에 적절한 html 문법을 삽입한다 -->
         <div v-if="todoItem.isComplete == false">
         {{ todoItem.context }}
@@ -13,7 +12,6 @@
         <div v-else>
         <del>{{ todoItem.context }}</del>
         </div>
-
         <span class="removeBtn" type="button" @click="removeTodo(todoItem.context, index)">
           <i class="far fa-trash-alt" aria-hidden="true"></i>
         </span>
