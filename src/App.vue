@@ -26,29 +26,42 @@ export default {
       localStorage.clear();
       this.todoItems = [];
     },
-		addTodo(todoItem,context,date) {
-      localStorage.setItem(todoItem, JSON.stringify({'title':todoItem, 'date': date,'context':context, 'isComplete':false, 'moreInfo':false}));
-			this.todoItems.push({'title':todoItem,'context':context, 'date':date, 'isComplete':false, 'moreInfo':false});
-		},
-    removeTodo(todoItem, index) {
+    // title
+      addTodo(key, context, date) { //Input에서 상위컴포넌트인 App으로 스트링을 넘겨줌.
+      //console.log(key);
+      localStorage.setItem(key, JSON.stringify({'title':key, 'date': date,'context':context, 'isComplete':false, 'moreinfo':false})); // 키값은 todoItem,  Json으로 객체화시켜 스트링값을 넘겨줌
+      this.todoItems.push({'title':key,'context':context, 'date':date, 'isComplete':false, 'moreInfo':false});//todoItem.title = todoItem , todoItem.context = context , todoItem.date = date , todoItem.isComplete = false
+      },
+
+    // {'title': v , 'date':v, 'context':v, 'isComplete':v}
+      removeTodo(todoItem, index) {
       localStorage.removeItem(todoItem.title);
       this.todoItems.splice(index, 1);
     },
+
     // Todo 상태를 변경시키기 위한 함수
-    completeTodo(todoItem, index){
-      todoItem.isComplete=!todoItem.isComplete;
-		  localStorage.setItem(todoItem.title, JSON.stringify({'title':todoItem.title, 'date': todoItem.date,'context':todoItem.context, 'isComplete':todoItem.isComplete,'moreInfo':false}));
+    // {'title': v , 'date':v, 'context':v, 'isComplete':v}
+      completeTodo(todoItem, index){
+      //console.log(JSON.stringify(todoItem));
+      todoItem.isComplete = !todoItem.isComplete;
+      localStorage.setItem(todoItem.title, JSON.stringify(todoItem));    
+      //this.todoItem[index][isComplete]=todoItem.isComplete;
     },
-	  editTodo(todoItem,index){
-		   localStorage.setItem(todoItem.title, JSON.stringify({'title':todoItem.title, 'date': todoItem.date,'context':todoItem.context, 'isComplete':todoItem.isComplete,'moreInfo':false}));
-	     }
+
+    // {'title': v , 'date':v, 'context':v, 'isComplete':v}
+     editTodo(todoItem, index){
+         localStorage.setItem(todoItem.title, JSON.stringify(todoItem));
+       //위에꺼랑 동일
+       }
   },
+  
   created() {
-		if (localStorage.length > 0) {
-			for (var i = 0; i < localStorage.length; i++) {
+      if (localStorage.length > 0) {
+         for (var i = 0; i < localStorage.length; i++) {
         this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
       }
-	}
+      //페이지가 로드 될 때
+     }
   },
   components: {
     'TodoHeader': TodoHeader,    'TodoInput': TodoInput,
