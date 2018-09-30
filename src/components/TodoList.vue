@@ -26,7 +26,7 @@
                -->
       <transition-group name="list" tag="ul">   
           <div v-for="(todoItem, index) in propsdata" :key="todoItem.title">
-         <li class="shadow">
+         <li class="shadow" :title = todoItem.context >
             <i class="checkBtn fas fa-check" aria-hidden="true" @click="completeTodo(todoItem, index)"></i><!--젤왼쪽 [checkbtn] -->
             <div v-if="todoItem.isComplete == false">
                 {{ todoItem.title }}
@@ -46,7 +46,7 @@
          </li>
          <li v-if="todoItem.moreInfo">
 				<span v-if="todoItem.context!==''" style="padding-left:10px">{{todoItem.context}}</span>
-				<span v-if="todoItem.date!==''" style="padding-left:100px" > 마감날짜 : {{todoItem.date}} </span></li>
+				<span v-if="todoItem.date!==''" style="padding-left:150px" > 마감날짜 : {{todoItem.date}} </span></li>
          </div>
       </transition-group>
    </section>
