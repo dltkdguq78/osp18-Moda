@@ -29,11 +29,15 @@ export default {
     // title
       addTodo(key, context, date) { //Input에서 상위컴포넌트인 App으로 스트링을 넘겨줌.
       //console.log(key);
+<<<<<<< src/App.vue
 <<<<<<< HEAD
       localStorage.setItem(key, JSON.stringify({'title':key, 'date': date,'context':context, 'isComplete':false, 'moreInfo':false})); // 키값은 todoItem,  Json으로 객체화시켜 스트링값을 넘겨줌
 =======
       localStorage.setItem(key, JSON.stringify({'title':key, 'date': date,'context':context, 'isComplete':false, 'moreinfo':false})); // 키값은 todoItem,  Json으로 객체화시켜 스트링값을 넘겨줌
 >>>>>>> 89a49eb1a8293cbda943d165bf86b1e8e18f0dcb
+=======
+      localStorage.setItem(key, JSON.stringify({'title':key, 'date': date,'context':context, 'isComplete':false, 'moreInfo':false})); // 키값은 todoItem,  Json으로 객체화시켜 스트링값을 넘겨줌
+>>>>>>> src/App.vue
       this.todoItems.push({'title':key,'context':context, 'date':date, 'isComplete':false, 'moreInfo':false});//todoItem.title = todoItem , todoItem.context = context , todoItem.date = date , todoItem.isComplete = false
       },
 
