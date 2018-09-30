@@ -75,7 +75,10 @@
             this.saveTodo.context = this.editContext && this.editContext.trim();
             if(this.saveTodo.date!==this.editDate)
                this.saveTodo.date = this.editDate;
+<<<<<<< HEAD
             this.saveTodo.moreInfo = false;
+=======
+>>>>>>> 89a49eb1a8293cbda943d165bf86b1e8e18f0dcb
             this.$emit('editTodo',this.saveTodo,this.saveIndex);
             this.clearInput();
             },
