@@ -11,7 +11,8 @@
 				<label>마 감 날 짜</label>
 				<input type = "date" v-model="newTodoDate">
 				<label>설 명</label>
-				<textarea id="subject" v-model="newTodoContext" placeholder = "내용을 입력하세요" style="height:100px;"></textarea>
+				<textarea v-model="newTodoContext" placeholder = "내용을 입력하세요" 
+					style="height:40px; overflow:hidden;"></textarea>
 			</span>
 			<span slot = "footer">	
 				<i class="closeModalBtn fas fa-check" aria-hidden="true" @click="addTodo"></i>

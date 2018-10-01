@@ -26,12 +26,13 @@
                -->
       <transition-group name="list" tag="ul">   
           <div v-for="(todoItem, index) in propsdata" :key="todoItem.title">
-         <li class="shadow" :title = todoItem.context >
-            <i class="checkBtn fas fa-check" aria-hidden="true" @click="completeTodo(todoItem, index)"></i><!--젤왼쪽 [checkbtn] -->
+         <li class="shadow" :title = todoItem.context sytle="height: 50px;">
             <div v-if="todoItem.isComplete == false">
+              <i class="checkBtn fas fa-check" aria-hidden="true" @click="completeTodo(todoItem, index)"></i><!--젤왼쪽 [checkbtn] -->
                 {{ todoItem.title }}
              </div>
              <div v-else>
+                <i class="checkBtn fas fa-check" style = "color:#A4A4A4" aria-hidden="true" @click="completeTodo(todoItem, index)"></i><!--젤왼쪽 [checkbtn] -->
                 <del>{{ todoItem.title }}</del> <!-- del태그로 완료된 태그 밑줄그어짐 -->
              </div>
              <span class="moreInfo" type="button" @click="save(todoItem,index)">
@@ -46,7 +47,7 @@
          </li>
          <li v-if="todoItem.moreInfo">
 				<span v-if="todoItem.context!==''" style="padding-left:10px">{{todoItem.context}}</span>
-				<span v-if="todoItem.date!==''" style="padding-left:150px" > 마감날짜 : {{todoItem.date}} </span></li>
+				<span v-if="todoItem.date!==''" style="padding:5px; margin-left : auto"> 마감 : {{todoItem.date}} </span></li>
          </div>
       </transition-group>
    </section>
@@ -110,7 +111,6 @@
    li {
       display: flex;
       min-height: 50px;
-      height: 50px;
       line-height: 50px;
       margin: 0.5rem 0;
       padding: 0 0.9rem;
