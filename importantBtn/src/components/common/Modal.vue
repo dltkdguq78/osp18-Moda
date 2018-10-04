@@ -29,6 +29,10 @@
 	color: #62acde;
 	margin-right: auto;
 	}
+	.modal-input {
+	color: #62acde;
+	margin-right: auto;
+	}
 	.modal-mask {
 		position: fixed;
 		z-index: 9998;

@@ -12,16 +12,16 @@
 				<input type = "date" v-model="newTodoDate">
 				<label>설 명</label>
 				<textarea v-model="newTodoContext" placeholder = "내용을 입력하세요" 
-					style="height:40px; overflow:hidden;"></textarea>
-				<input type="radio" id="nomal" value="nomal" v-model="picked" checked>
-				<label for="nomal">nomal</label>
-				
-				<input type="radio" id="important" value="important" v-model="picked">
-				<label for="important">important</label>
-				
-				<input type="radio" id="emergency " value="emergency" v-model="picked">
-				<label for="emergency ">emergency </label>
-				
+					style="height:100px;"></textarea>
+				<label>중 요 도</label>
+				<div class ="importBtn">
+					<input type="radio" id="nomal" value="nomal" style = "width:15px;" v-model="picked">
+					<label for="nomal">보통</label>
+					<input type="radio" id="important" value="important"  style = "width:15px;" v-model="picked">
+					<label for="important">중요</label>
+					<input type="radio" id="emergency " value="emergency"  style = "width:15px;" v-model="picked">
+					<label for="emergency ">긴급 </label>
+				</div>				
 				</span>
 			<span slot = "footer">	
 				<i class="closeModalBtn fas fa-check" aria-hidden="true" @click="addTodo"></i>
@@ -83,20 +83,22 @@
 	}
 
 	input[type=date], textarea {
-		width: 100%; /* Full width */
-		padding: 12px; /* Some padding */  
-		border: 1px solid #ccc; /* Gray border */
-		border-radius: 4px; /* Rounded borders */
-		box-sizing: border-box; /* Make sure that padding and width stays in place */
-		margin-top: 6px; /* Add a top margin */
-		margin-bottom: 16px; /* Bottom margin */
-		resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
-		resize:none;
-	}
-	label{
-			text-align: left;
-			color: #62acde;
-	}
+      width: 100%; /* Full width */
+      padding: 12px; /* Some padding */  
+      border: 1px solid #ccc; /* Gray border */
+      border-radius: 4px; /* Rounded borders */
+      box-sizing: border-box; /* Make sure that padding and width stays in place */
+      margin-top: 6px; /* Add a top margin */
+      margin-bottom: 16px; /* Bottom margin */
+      resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+      resize:none;
+   }
+
+	 .importBtn{
+       width: 100%;
+       color: #000000;
+       padding: 12px;
+ 	}
 
 	.inputBox {
 		background: white;
