@@ -23,8 +23,8 @@
 		border-radius: 5px;
 		margin: 0 auto;
 	}
-	.clearAllBtn {
-		color: #e20303;
-		display: block;
+	.clearAllBtn{
+		width: 100%;
+		color:red;
 	}
 </style>

@@ -25,7 +25,7 @@
 </template>
 
 <style lang="css">
-	.closeModalBtn {
+	.ModalBtn {
 	color: #62acde;
 	margin-right: auto;
 	}
@@ -58,6 +58,11 @@
 	}
 
 	.modal-header h3 {
+		margin-top: 0;
+		color: #62acde;
+	}
+
+	.modal-input {
 		margin-top: 0;
 		color: #62acde;
 	}
