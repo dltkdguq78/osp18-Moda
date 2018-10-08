@@ -32,7 +32,7 @@
          } -->
         <transition-group name="list" tag="ul">   
             <div v-for="(todoItem, index) in propsdata" :key="todoItem.title">
-                <div v-if="searchTodo(todoItem.title)"><!--search 추가 -->
+                <div v-if="searchTodo(todoItem.title,search)"><!--search 추가 -->
                 <li class="shadow" :title = todoItem.context sytle="height: 50px;">
                     <div v-if="todoItem.isComplete == false"  @click="completeTodo(todoItem, index)">
                         <div v-if="todoItem.picked=='important'">
@@ -88,7 +88,7 @@
                moreInfo: false,
             }
          },
-      props: ['propsdata'],
+      props: ['propsdata','search'],
       methods: {
          removeTodo(todoItem, index) {
             this.$emit('removeTodo', todoItem, index);
@@ -112,10 +112,8 @@
          completeTodo(todoItem, index){
             this.$emit('completeTodo', todoItem, index);
             },
-         searchTodo(key,search){
-            console.log(key)       
-           // console.log(search)      
-            return true
+         searchTodo(key,search){     
+            return (key.indexOf(search)>-1 || search ==='')
          },
          clearInput() {
             this.editContext="";

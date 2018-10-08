@@ -4,7 +4,7 @@
     <TodoInput v-on:addTodo="addTodo" v-on:TagremoveTodo="TagremoveTodo" v-on:searchTodo="searchTodo"></TodoInput>
     <!-- TodoList 의 Template 를 추가할 때 동작할 propdata 를 bind 한다.
      이후 completeTodo 메소드와 removeTodo 메소드에서 동작할 상위 함수를 bind한다. -->
-    <TodoList v-bind:propsdata="todoItems" @completeTodo="completeTodo"
+    <TodoList v-bind:propsdata="todoItems" v-bind:search="search" @completeTodo="completeTodo"
        @removeTodo="removeTodo" @editTodo="editTodo"></TodoList>
       <!-- List에 search값 바인딩 시키면 search 기능 완성  -->
     
@@ -19,11 +19,11 @@ import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
 
 
-export default {
+export default {  
   data() {
     return {
-      todoItems: [],
-      search:''
+      search:'',
+      todoItems: []
     }
   },
   methods: {
@@ -64,7 +64,7 @@ export default {
     },
     searchTodo(key) {
       this.search = key
-      console.log(this.search)
+      //console.log(this.search)
     },
 
     // Todo 상태를 변경시키기 위한 함수

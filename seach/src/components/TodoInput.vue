@@ -5,7 +5,7 @@
 			<i class="Btn fas fa-search" aria-hidden="true"></i>
 		</span>
 		<input type="text" v-model="newTodoItem" placeholder="Type what you have to do" 
-			v-on:keyup.enter="addModal=true" v-on:keyup="searchTodo">
+			v-on:keyup.enter="addModal=true" v-on:keyup="searchTodo"> <!-- v-on:keyup="searchTodo" -->
 		<span class="addContainer" v-on:click="addModal=true">
 			<i class="Btn fas fa-plus" aria-hidden="true"></i>
 		</span>
@@ -77,6 +77,7 @@
 					var context = this.newTodoContext && this.newTodoContext.trim();
 					this.$emit('addTodo', title,context,this.newTodoDate,this.picked);
 					this.clearInput();
+					this.searchTodo()
 				} else {
 					this.showModal = !this.showModal;
 				}
