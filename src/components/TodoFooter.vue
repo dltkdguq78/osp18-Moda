@@ -1,6 +1,9 @@
 <template>
 	<div class="clearAllContainer">
 		<span class="clearAllBtn" @click="clearTodo">Clear All</span>
+		<span class="clearAllBtn" v-on:click="topFunction">
+			<i class="addBtn fas fa-plus" aria-hidden="true"></i>
+	</span>
 	</div>
 </template>
 
@@ -9,6 +12,10 @@
 		methods: {
 			clearTodo() {
 				this.$emit('removeAll');
+			},
+			topFunction() { //top버튼 구현 수정 필요 
+    			document.body.scrollTop = 0;
+    			document.documentElement.scrollTop = 0;
 			}
 		}
 	}
@@ -23,8 +30,8 @@
 		border-radius: 5px;
 		margin: 0 auto;
 	}
-	.clearAllBtn {
-		color: #e20303;
-		display: block;
+	.clearAllBtn{
+		width: 100%;
+		color:red;
 	}
 </style>
