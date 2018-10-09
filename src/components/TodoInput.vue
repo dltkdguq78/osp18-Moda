@@ -5,15 +5,17 @@
 			<i class="Btn fas fa-search" aria-hidden="true"></i>
 		</span>
 		<input type="text" v-model="newTodoItem" placeholder="Type what you have to do" 
-			v-on:keyup.enter="addModal=true" v-on:keyup="searchTodo"> <!-- v-on:keyup="searchTodo" -->
-		<span class="addContainer" v-on:click="addModal=true">
+			v-on:keyup.enter="check" v-on:keyup="searchTodo"> <!-- v-on:keyup="searchTodo" -->
+		<span class="addContainer" v-on:click="check">
 			<i class="Btn fas fa-plus" aria-hidden="true"></i>
 		</span>
 
-		<modal v-if="showModal" @close="showModal = false" >
+		<modal v-if="showModal" @keyup="showModal = false" >
 			<h3 slot="header">경고</h3>
-			<span slot="footer" @click="showModal = false">할 일을 입력하세요.
-				<i class="closeModalBtn fas fa-times" aria-hidden="true" @click="addModal = false"></i>
+			<span slot="context">
+				할 일을 입력하세요.</span>
+			<span slot="footer" @click="showModal = false">
+				<i class="ModalBtn fas fa-times" aria-hidden="true" @click="addModal = false"></i>
 			</span>
 		</modal>
 	</div>
@@ -66,7 +68,7 @@
 				newTodoContext:'',
 				showModal: false,
 				addModal: false,
-				picked : '',
+				picked : 'nomal',
 				tagpicked : ''
 			}
 		},
@@ -82,12 +84,21 @@
 					this.showModal = !this.showModal;
 				}
 			},
+			check(){
+				var title = this.newTodoItem && this.newTodoItem.trim();
+				if (title !== "")
+					this.addModal=true;
+				else {
+					this.clearInput();
+					this.showModal=true;
+					}
+			},
 			clearInput() {
 				this.addModal = false;
 				this.newTodoItem = '';
 				this.newTodoDate = '';
 				this.newTodoContext = '';
-				this.picked='';
+				this.picked='nomal';
 			},
 			TagremoveTodo(command){
             	this.$emit('TagremoveTodo', command);

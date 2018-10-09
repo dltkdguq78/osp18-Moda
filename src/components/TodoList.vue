@@ -34,7 +34,7 @@
             <div v-for="(todoItem, index) in propsdata" :key="todoItem.title">
                 <div v-if="searchTodo(todoItem.title,search)"><!--search 추가 -->
                 <li class="shadow" :title = todoItem.context sytle="height: 50px;">
-                    <div v-if="todoItem.isComplete == false"  @click="completeTodo(todoItem, index)">
+                    <div v-if="todoItem.isComplete == false"  @click="completeTodo(todoItem)">
                         <div v-if="todoItem.picked=='important'">
                             <i class="checkBtn fas fa-check" style = "color:#FFBF00" aria-hidden="true"></i>
                             {{ todoItem.title }}
@@ -50,11 +50,11 @@
                     </div>
                     <div v-else>
                         <i class="checkBtn fas fa-check" style = "color:#A4A4A4" 
-                            aria-hidden="true" @click="completeTodo(todoItem, index)"></i><!--젤왼쪽 [checkbtn] -->
+                            aria-hidden="true" @click="completeTodo(todoItem)"></i><!--젤왼쪽 [checkbtn] -->
                             <del>{{ todoItem.title }}</del> <!-- del태그로 완료된 태그 밑줄그어짐 -->
                     </div>
-                    <span class="moreInfo" type="button" @click="save(todoItem,index)">
-				        <i class="fas fa-angle-down" aria-hidden="true" @click="todoItem.moreInfo=!todoItem.moreInfo"></i>
+                    <span class="moreInfo" type="button" @click="more(todoItem)">
+				        <i class="fas fa-angle-down" aria-hidden="true"></i>
 			        </span>
                     <span class="editBtn" type="button" @click="save(todoItem,index)"><!--[editbnt] , 휴지통 -->
                         <i class="far fa-edit" aria-hidden="true" @click="editModal =! editModal"></i>
@@ -85,7 +85,7 @@
                editDate:'', //달력연동
                editimportant:'',
                editModal: false,
-               moreInfo: false,
+               moreInfo: false
             }
          },
       props: ['propsdata','search'],
@@ -114,6 +114,10 @@
             },
          searchTodo(key,search){     
             return (key.indexOf(search)>-1 || search ==='')
+         },
+         more(todoItem){
+             if(todoItem.context !== ''||todoItem.date !== '')
+                todoItem.moreInfo=!todoItem.moreInfo
          },
          clearInput() {
             this.editContext="";

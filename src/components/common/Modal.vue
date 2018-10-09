@@ -1,11 +1,15 @@
 <template lang="html">
 	<transition name="modal">
-		<div class="modal-mask" @keyup.enter="$emit('close')">
+		<div class="modal-mask" @keyup="$emit('close')">
 			<div class="modal-wrapper">
 				<div class="modal-container">
 					<div class="modal-header">
 						<slot name="header">
 							<!--  -->
+						</slot>
+					</div>
+					<div class = "modal-context">
+						<slot name = "context">
 						</slot>
 					</div>
 					<div class="modal-input">
@@ -27,6 +31,7 @@
 <style lang="css">
 	.ModalBtn {
 	color: #62acde;
+	margin-top: 20px;
 	margin-right: auto;
 	}
 	.modal-mask {
@@ -47,7 +52,7 @@
 	}
 
 	.modal-container {
-		width: 300px;
+		width: 40%;
 		margin: 0px auto;
 		padding: 20px 30px;
 		background-color: #fff;
