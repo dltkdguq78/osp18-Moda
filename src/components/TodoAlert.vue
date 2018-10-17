@@ -1,6 +1,6 @@
 <template>
 	<section>
-        <modal v-if="alertModal" @close="alertModal = false" @click="alertModal = false">
+        <modal v-if="alertModal" v-on:close="alertModal = false">
             <h3 slot="header">마감 임박</h3>
             <span slot = "context">
                 <div class="list">
@@ -68,15 +68,14 @@
             },
             parseDate(input) {
              var parts = input.match(/(\d+)/g);
-            // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-             return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+             return new Date(parts[0], parts[1]-1, parts[2]); 
             },
             view(){
                 return  this.count
             }
 		},  
 		components: {
-			Modal: Modal
+			'modal': Modal
 		}
 	}
 </script>

@@ -2,13 +2,13 @@
     <section>
         <modal v-if="editModal">
             <h3 slot="header">수정</h3>
-            <span slot = "input" @keyup.enter="editTodo">
+            <span slot = "input">
                 <label>할 일</label>
                 <p style="color:#000000">{{saveTodo.title}}</p>
                 <label>마 감 날 짜</label>
-                <input type = "date" v-model="editDate"><!--editdate에 달력이들어가는데 model로 데이타 연동됨 -->
+                <input type = "date" v-model="editDate">
                 <label>내 용</label>
-                <textarea id="subject" v-model="editContext" style="height:100px;"></textarea><!--editContext에 내용이들어가는데 model로 데이타 연동됨 -->
+                <textarea id="subject" v-model="editContext" style="height:100px;"></textarea>
                 <label>중 요 도</label>
                 <div class ="importBtn">
                     <input type="radio" id="normal" value="normal" style = "width:15px;" v-model="editimportant">
@@ -20,19 +20,38 @@
                 </div>
             </span>       
             <span slot = "footer">   
-                <i class="ModalBtn fas fa-check" aria-hidden="true" @click="editTodo"></i> <!--수정창 떳을때 [checkbtn] , times -->
-                <i class="ModalBtn fas fa-times" aria-hidden="true" @click ="clearInput"></i><!--수정창 떳을때 checkbtn , [times] -->
+                <i class="ModalBtn fas fa-check" aria-hidden="true" @click="editTodo"></i>
+                <i class="ModalBtn fas fa-times" aria-hidden="true" @click ="clearInput"></i>
             </span>
         </modal>
-      <!--
-         for todoItem,Index in TodoItems {
-             V = {'title': v , 'date':v, 'context':v, 'isComplete':v}
-             V.title
-             V.isComplete
-         } -->
-        <transition-group name="list" tag="ul">   
+        
+        <transition-group name="list" tag="ul">        
+            <modal v-if="editModal">
+            <h3 slot="header">수정</h3>
+            <span slot = "input">
+                <label>할 일</label>
+                <p style="color:#000000">{{saveTodo.title}}</p>
+                <label>마 감 날 짜</label>
+                <input type = "date" v-model="editDate">
+                <label>내 용</label>
+                <textarea id="subject" v-model="editContext" style="height:100px;"></textarea>
+                <label>중 요 도</label>
+                <div class ="importBtn">
+                    <input type="radio" id="normal" value="normal" style = "width:15px;" v-model="editimportant">
+                    <label for="normal">보통</label>
+                    <input type="radio" id="important" value="important"  style = "width:15px;" v-model="editimportant">
+                    <label for="important">중요</label>
+                    <input type="radio" id="emergency " value="emergency"  style = "width:15px;" v-model="editimportant">
+                    <label for="emergency ">긴급 </label>
+                </div>
+            </span>       
+            <span slot = "footer">   
+                <i class="ModalBtn fas fa-check" aria-hidden="true" @click="editTodo"></i>
+                <i class="ModalBtn fas fa-times" aria-hidden="true" @click ="clearInput"></i>
+            </span>
+        </modal>  
             <div v-for="(todoItem, index) in propsdata" :key="todoItem.title">
-                <div v-if="searchTodo(todoItem.title,search)"><!--search 추가 -->
+                <div v-if="searchTodo(todoItem.title,search)">
                 <li class="shadow" :title = todoItem.context sytle="height: 50px;">
                     <div v-if="todoItem.isComplete == false"  @click="completeTodo(todoItem)">
                         <div v-if="todoItem.picked=='important'">
@@ -44,14 +63,14 @@
                             {{ todoItem.title }}
                         </div>
                         <div v-else>
-                            <i class="checkBtn fas fa-check" aria-hidden="true"></i><!--젤왼쪽 [checkbtn] -->
+                            <i class="checkBtn fas fa-check" aria-hidden="true"></i>
                                 {{ todoItem.title }}
                         </div>
                     </div>
                     <div v-else>
                         <i class="checkBtn fas fa-check" style = "color:#A4A4A4" 
-                            aria-hidden="true" @click="completeTodo(todoItem)"></i><!--젤왼쪽 [checkbtn] -->
-                            <del>{{ todoItem.title }}</del> <!-- del태그로 완료된 태그 밑줄그어짐 -->
+                            aria-hidden="true" @click="completeTodo(todoItem)"></i>
+                            <del>{{ todoItem.title }}</del>
                     </div>
                     <span class="moreInfo" type="button" @click="more(todoItem)">
 				        <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -148,16 +167,14 @@
       background: white;
       border-radius: 5px;
    }
-
    input[type=text],[type=date], textarea {
-      width: 100%; /* Full width */
-      padding: 12px; /* Some padding */  
-      border: 1px solid #ccc; /* Gray border */
-      border-radius: 4px; /* Rounded borders */
-      box-sizing: border-box; /* Make sure that padding and width stays in place */
-      margin-top: 6px; /* Add a top margin */
-      margin-bottom: 16px; /* Bottom margin */
-      resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 6px;
+      margin-bottom: 16px;
       resize:none;
    }
    .importBtn{
