@@ -67,6 +67,7 @@ export default {
     sortTodo(sort){
       if(sort == 'date'){
         this.todoItems.sort(function(a,b){return a['date']>b['date']});
+        this.todoItems.sort(function(a,b){return a['date']==''});
       }
       if(sort == 'bomb')
         this.todoItems.sort(function(a,b){return a['picked']>b['picked']});
