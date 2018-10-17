@@ -2,13 +2,12 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <TodoInput v-on:addTodo="addTodo" v-on:TagremoveTodo="TagremoveTodo" 
-        v-on:searchTodo="searchTodo"></TodoInput>
+        v-on:searchTodo="searchTodo" @sortTodo ="sortTodo"></TodoInput>
     <!-- TodoList 의 Template 를 추가할 때 동작할 propdata 를 bind 한다.
      이후 completeTodo 메소드와 removeTodo 메소드에서 동작할 상위 함수를 bind한다. -->
     <TodoList v-bind:propsdata="todoItems" v-bind:search="search" @completeTodo="completeTodo"
-        @removeTodo="removeTodo" @editTodo="editTodo"></TodoList>
-      <!-- List에 search값 바인딩 시키면 search 기능 완성  -->
-    
+          @removeTodo="removeTodo" @editTodo="editTodo"></TodoList>
+      <!-- List에 search값 바인딩 시키면 search 기능 완성  -->    
     <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
     <TodoAlert v-bind:propsdata="todoItems" @completeTodo="completeTodo"></TodoAlert>
   </div>
@@ -21,11 +20,11 @@ import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
 import TodoAlert from './components/TodoAlert.vue'
 
-
 export default {  
   data() {
     return {
       search:'',
+      list:true,
       todoItems: []
     }
   },
@@ -54,7 +53,7 @@ export default {
               var tempTodoList = JSON.parse(localStorage.getItem(localStorage.key(i)));
               console.log(tempTodoList);
 
-              if (command == 'nomal' && tempTodoList.picked == 'nomal')
+              if (command == 'normal' && tempTodoList.picked == 'normal')
                 this.todoItems.push(tempTodoList);
               if (command == 'important' && tempTodoList.picked == 'important')
                 this.todoItems.push(tempTodoList);
@@ -63,7 +62,17 @@ export default {
               if (command == 'all')
                 this.todoItems.push(tempTodoList);
         }
-      
+      this.todoItems.sort(function(a,b){return a['isComplete']>b['isComplete']});
+    },
+    sortTodo(sort){
+      if(sort == 'date'){
+        this.todoItems.sort(function(a,b){return a['date']>b['date']});
+        this.todoItems.sort(function(a,b){return a['date']==''});
+      }
+      if(sort == 'bomb')
+        this.todoItems.sort(function(a,b){return a['picked']>b['picked']});
+    
+      this.todoItems.sort(function(a,b){return a['isComplete']>b['isComplete']});
     },
     searchTodo(key) {
       this.search = key
@@ -81,14 +90,14 @@ export default {
      editTodo(todoItem, index){
          localStorage.setItem(todoItem.title, JSON.stringify(todoItem));
        }
-  },
-  
+  },  
   created() {
       if (localStorage.length > 0) {
          for (var i = 0; i < localStorage.length; i++) {
         this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
       }
       //페이지가 로드 될 때
+      this.todoItems.sort(function(a,b){return a['isComplete']>b['isComplete']});
      }
   },
   components: {

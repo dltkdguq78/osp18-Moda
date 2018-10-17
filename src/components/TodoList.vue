@@ -11,8 +11,8 @@
                 <textarea id="subject" v-model="editContext" style="height:100px;"></textarea><!--editContext에 내용이들어가는데 model로 데이타 연동됨 -->
                 <label>중 요 도</label>
                 <div class ="importBtn">
-                    <input type="radio" id="nomal" value="nomal" style = "width:15px;" v-model="editimportant">
-                    <label for="nomal">보통</label>
+                    <input type="radio" id="normal" value="normal" style = "width:15px;" v-model="editimportant">
+                    <label for="normal">보통</label>
                     <input type="radio" id="important" value="important"  style = "width:15px;" v-model="editimportant">
                     <label for="important">중요</label>
                     <input type="radio" id="emergency " value="emergency"  style = "width:15px;" v-model="editimportant">
@@ -63,7 +63,7 @@
                         <i class="far fa-trash-alt" aria-hidden="true"></i>
                     </span>
                  </li>
-                <li v-if="todoItem.moreInfo">
+                <li v-show="todoItem.moreInfo">
                     <span v-if="todoItem.context!==''" style="padding-left:10px">{{todoItem.context}}</span>
                     <span v-if="todoItem.date!==''" style="padding:5px; margin-left : auto"> 마감 : {{todoItem.date}} </span>
                 </li>
@@ -88,7 +88,7 @@
                moreInfo: false
             }
          },
-      props: ['propsdata','search'],
+      props: ['propsdata','search','sort'],
       methods: {
          removeTodo(todoItem, index) {
             this.$emit('removeTodo', todoItem, index);

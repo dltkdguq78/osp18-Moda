@@ -21,39 +21,44 @@
 	</div>
 
 	<modal v-if="addModal">
-			<h3 slot="header">추가 내용 설정</h3>
-			<span slot = "input" @keyup.enter="addTodo">
-				<label>마 감 날 짜</label>
-				<input type = "date" v-model="newTodoDate">
-				<label>설 명</label>
-				<textarea v-model="newTodoContext" placeholder = "내용을 입력하세요" 
-					style="height:100px;"></textarea>
-				<label>중 요 도</label>
-				<div class ="importBtn">
-					<input type="radio" id="nomal" value="nomal" style = "width:15px;" v-model="picked">
-					<label for="nomal">보통</label>
-					<input type="radio" id="important" value="important"  style = "width:15px;" v-model="picked">
-					<label for="important">중요</label>
-					<input type="radio" id="emergency " value="emergency"  style = "width:15px;" v-model="picked">
-					<label for="emergency ">긴급 </label>
-				</div>				
-				</span>
-			<span slot = "footer">	
-				<i class="ModalBtn fas fa-check" aria-hidden="true" @click="addTodo"></i>
-				<i class="ModalBtn fas fa-times" aria-hidden="true" @click ="clearInput"></i>
+		<h3 slot="header">추가 내용 설정</h3>
+		<span slot = "input" @keyup.enter="addTodo">
+			<label>마 감 날 짜</label>
+			<input type = "date" v-model="newTodoDate">
+			<label>설 명</label>
+			<textarea v-model="newTodoContext" placeholder = "내용을 입력하세요" 
+				style="height:100px;"></textarea>
+			<label>중 요 도</label>
+			<div class ="importBtn">
+				<input type="radio" id="normal" value="normal" style = "width:15px;" v-model="picked">
+				<label for="normal">보통</label>
+				<input type="radio" id="important" value="important"  style = "width:15px;" v-model="picked">
+				<label for="important">중요</label>
+				<input type="radio" id="emergency " value="emergency"  style = "width:15px;" v-model="picked">
+				<label for="emergency ">긴급 </label>
+			</div>				
 			</span>
-		</modal>
+		<span slot = "footer">	
+			<i class="ModalBtn fas fa-check" aria-hidden="true" @click="addTodo"></i>
+			<i class="ModalBtn fas fa-times" aria-hidden="true" @click ="clearInput"></i>
+		</span>
+	</modal>
 			
-		<div class ="tagimportBtn">
-                    <input type="radio" id="All" value="All" @click="TagremoveTodo('all')" style = "width:15px;" v-model="tagpicked">
-                    <label for="All">전체</label>
-                    <input type="radio" id="nomal" value="nomal" @click="TagremoveTodo('nomal')" style = "width:15px;" v-model="tagpicked">
-                    <label for="nomal">보통</label>
-                    <input type="radio" id="important" value="important" @click="TagremoveTodo('important')"  style = "width:15px;" v-model="tagpicked">
-                    <label for="important">중요</label>
-                    <input type="radio" id="emergency" value="emergency" @click="TagremoveTodo('emergency')"  style = "width:15px;" v-model="tagpicked">
-                    <label for="emergency">긴급 </label>
-        </div>
+	<div class = "btnsdiv">
+		<button v-for="pickbtn in buttons.pick" :key="pickbtn.title" class = "Btns" :class="pickbtn.id" 
+		:title="pickbtn.title" v-on:click="TagremoveTodo(pickbtn.id)" v-text="pickbtn.title"></button>
+		<div class="dropdown">
+   			<button class="dropbtn">정렬 
+      			<i class="fa fa-caret-down"></i>
+    		</button>
+			<div class="dropdown-content">
+				<button	v-for="btn in buttons.sort" :key="btn.class" :title="btn.title" 
+					class = "Btns" :class="btn.class" v-on:click="sortTodo(btn.class)">
+					<i class = "fas" :class="'fa-'+btn.class"></i>
+				</button>
+			</div>
+		</div>
+    </div>
 	</section>
 </template>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -68,8 +73,21 @@
 				newTodoContext:'',
 				showModal: false,
 				addModal: false,
-				picked : 'nomal',
-				tagpicked : ''
+				picked : 'normal',
+				tagpicked : 'all',
+				sortType:'',
+				buttons:{
+					'pick':[
+						{'id' : 'all', 'title':'전체'},
+						{'id' : 'normal', 'title':'보통'},
+						{'id' : 'important', 'title':'중요'},
+						{'id' : 'emergency', 'title':'긴급'}
+					],
+					'sort':[
+						{'class':'sort-numeric-down', 'title':'날짜순으로 정렬'},
+						{'class':'bomb', 'title':'중요도순으로 정렬'},
+					]
+				}
 			}
 		},
 		methods: {
@@ -98,10 +116,18 @@
 				this.newTodoItem = '';
 				this.newTodoDate = '';
 				this.newTodoContext = '';
-				this.picked='nomal';
+				this.picked='normal';
 			},
 			TagremoveTodo(command){
+				this.tagpicked = command;
             	this.$emit('TagremoveTodo', command);
+			},
+			sortTodo(type){
+				//:class = "sortType == btn.class?'selected':''"
+				if(type == 'sort-numeric-down')
+					this.$emit('sortTodo', 'date');		
+				else if(type == 'bomb')
+					this.$emit('sortTodo', 'bomb');	
 			},
 			searchTodo(){
 				var title = this.newTodoItem && this.newTodoItem.trim();
@@ -115,7 +141,7 @@
 </script>
 
 <style scoped>
-	input:focus {
+	input:focus, .Btns:focus {
 		outline: none;
 	}
 
@@ -142,6 +168,9 @@
 		height: 50px;
 		line-height: 50px;
 		border-radius: 5px;
+		margin : auto;
+		margin-bottom: 10px;
+		width: 70%;
 	}
 	.inputBox input {
 		border-style: none;
@@ -149,25 +178,90 @@
 	}
 	.addContainer {
 		float: right;
-		background: linear-gradient(to right, #6478FB, #8763FB);
+		background: linear-gradient(to right, #48c6ef, #6f86d6);
 		display: inline-block;
 		width: 3rem;
 		border-radius: 0 5px 5px 0;
 	}
 	.searchContainer {
 		float: left;
-		background: linear-gradient(to left, rgb(219, 163, 43), rgb(219, 119, 52));
+		background: linear-gradient(to right, #ff9a9e, #fad0c4);
 		display: inline-block;
 		width: 3rem;
 		border-radius: 5px 0 0 5px;
 	}
-	.Btn {
+	.Btn{
+		color: azure;
+	}
+	.btnsdiv{
+		font-weight: bold;
+		width: 100%;
+		background: linear-gradient(to right, #ff9a9e, #6f86d6);
+	}
+	.Btns {
+		border: none;
+		background-color: inherit;
+		padding:15px 28px;
+		font-size: 16px;
+		cursor: pointer;
 		color: white;
-		vertical-align: middle;
+	}
+	.all:active, .all:hover{
+      color: black;
+	  background-color: white;
+	}
+	.normal:active, .normal:hover{
+      color: #62acde;
+	  background-color: white;
+	}
+	.important:active, .important:hover{
+      color: #FFBF00;		
+	  background-color: white; 
+	}
+	.emergency:active, .emergency:hover{	
+		background-color: white;
+    	color: #FF0000; 
+	}
+	.dropdown {
+		float: right;
+		overflow: hidden;
 	}
 
-	.tagimportBtn{
-		padding : 12px;
+	.dropdown .dropbtn {
+		cursor: pointer;
+		font-size: 16px;
+		border: none;
+		color: white;
+		background-color: inherit;
+		padding: 15px 28px;
+	}
+
+	.dropdown:hover .dropbtn {
+		background-color: white;
+		color:#6f86d6;
+	}
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		width: 103px;
+		z-index: 1;
+	}
+
+	.dropdown-content button {
+		color: black;
+		display: block;
 		width: 100%;
+		text-align: center;
+	}
+
+	.dropdown-content button:hover {
+		background-color: #6f86d6;
+		color: white
+	}
+
+	.dropdown:hover .dropdown-content {
+		display: block;
 	}
 </style>
