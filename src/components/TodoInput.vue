@@ -5,11 +5,10 @@
 			<i class="Btn fas fa-search" aria-hidden="true"></i>
 		</span>
 		<input type="text" v-model="newTodoItem" placeholder="Type what you have to do" 
-			v-on:keyup.enter="check" v-on:keyup="searchTodo"> <!-- v-on:keyup="searchTodo" -->
+			v-on:keyup.enter="check"> <!--v-on:keyup="searchTodo"-->
 		<span class="addContainer" v-on:click="check">
 			<i class="Btn fas fa-plus" aria-hidden="true"></i>
 		</span>
-
 		<modal v-if="showModal" @keyup="showModal = false" >
 			<h3 slot="header">경고</h3>
 			<span slot="context">
@@ -44,21 +43,21 @@
 		</span>
 	</modal>
 			
-	<div class = "btnsdiv">
-		<button v-for="pickbtn in buttons.pick" :key="pickbtn.title" class = "Btns" :class="pickbtn.id" 
-		:title="pickbtn.title" v-on:click="TagremoveTodo(pickbtn.id)" v-text="pickbtn.title"></button>
-		<div class="dropdown">
-   			<button class="dropbtn">정렬 
-      			<i class="fa fa-caret-down"></i>
-    		</button>
-			<div class="dropdown-content">
-				<button	v-for="btn in buttons.sort" :key="btn.class" :title="btn.title" 
-					class = "Btns" :class="btn.class" v-on:click="sortTodo(btn.class)">
-					<i class = "fas" :class="'fa-'+btn.class"></i>
+		<div class = "btnsdiv">
+			<button v-for="pickbtn in buttons.pick" :key="pickbtn.title" class = "Btns" :class="pickbtn.id" 
+				:title="pickbtn.title" v-on:click="TagremoveTodo(pickbtn.id)" v-text="pickbtn.title"></button>
+			<div class="dropdown">
+				<button class="dropbtn">정렬 
+					<i class="fa fa-caret-down"></i>
 				</button>
+				<div class="dropdown-content">
+					<button	v-for="btn in buttons.sort" :key="btn.class" :title="btn.title" 
+						class = "Btns" :class="btn.class" v-on:click="sortTodo(btn.class)">
+						<i class = "fas" :class="'fa-'+btn.class"></i>
+					</button>
+				</div>
 			</div>
 		</div>
-    </div>
 	</section>
 </template>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -123,7 +122,6 @@
             	this.$emit('TagremoveTodo', command);
 			},
 			sortTodo(type){
-				//:class = "sortType == btn.class?'selected':''"
 				if(type == 'sort-numeric-down')
 					this.$emit('sortTodo', 'date');		
 				else if(type == 'bomb')
@@ -146,14 +144,14 @@
 	}
 
 	input[type=date], textarea {
-      width: 100%; /* Full width */
-      padding: 12px; /* Some padding */  
-      border: 1px solid #ccc; /* Gray border */
-      border-radius: 4px; /* Rounded borders */
-      box-sizing: border-box; /* Make sure that padding and width stays in place */
-      margin-top: 6px; /* Add a top margin */
-      margin-bottom: 16px; /* Bottom margin */
-      resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px; 
+      box-sizing: border-box; 
+      margin-top: 6px;
+      margin-bottom: 16px; 
+      resize: vertical; 
       resize:none;
    }
 
@@ -179,14 +177,12 @@
 	.addContainer {
 		float: right;
 		background: linear-gradient(to right, #48c6ef, #6f86d6);
-		display: inline-block;
 		width: 3rem;
 		border-radius: 0 5px 5px 0;
 	}
 	.searchContainer {
 		float: left;
 		background: linear-gradient(to right, #ff9a9e, #fad0c4);
-		display: inline-block;
 		width: 3rem;
 		border-radius: 5px 0 0 5px;
 	}
@@ -200,7 +196,7 @@
 	}
 	.Btns {
 		border: none;
-		background-color: inherit;
+		background-color: rgba(0,0,0,0.0);
 		padding:15px 28px;
 		font-size: 16px;
 		cursor: pointer;
@@ -232,7 +228,7 @@
 		font-size: 16px;
 		border: none;
 		color: white;
-		background-color: inherit;
+		background-color: rgba(0,0,0,0.0);
 		padding: 15px 28px;
 	}
 

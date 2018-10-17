@@ -1,6 +1,6 @@
 <template lang="html">
 	<transition name="modal">
-		<div class="modal-mask" @keyup="$emit('close')">
+		<div class="modal-mask" @keyup.enter="$emit('close')">
 			<div class="modal-wrapper">
 				<div class="modal-container">
 					<div class="modal-header">
@@ -9,14 +9,15 @@
 						</slot>
 					</div>
 					<div class = "modal-context">
-						<slot name = "context">
+						<slot name = "context">		
+							<!--  -->
 						</slot>
 					</div>
 					<div class="modal-input">
-					<slot name="input">
-						<!--  -->
-					</slot>
-				</div>
+						<slot name="input">
+							<!--  -->
+						</slot>
+					</div>
 					<div class="modal-footer">
 						<slot name="footer">
 							<!--  -->
