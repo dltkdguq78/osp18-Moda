@@ -2,10 +2,14 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <TodoInput v-on:addTodo="addTodo" v-on:TagremoveTodo="TagremoveTodo" 
-        v-on:searchTodo="searchTodo" @sortTodo ="sortTodo"></TodoInput>
-    <TodoList v-bind:propsdata="todoItems" v-bind:search="search" @completeTodo="completeTodo"
+        v-on:searchTodo="searchTodo" @sortTodo ="sortTodo" @viewTodo="viewTodo"></TodoInput>
+    <div v-show="list">
+      <TodoList v-bind:propsdata="todoItems" v-bind:search="search" @completeTodo="completeTodo"
           @removeTodo="removeTodo" @editTodo="editTodo"></TodoList>
-    <TodoCalen></TodoCalen>
+    </div>
+    <div v-show="!list">
+      <TodoCalen :events="todoItems" @removeTodo="removeTodo" @completeTodo="completeTodo"></TodoCalen>
+    </div>
     <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
     <TodoAlert v-bind:propsdata="todoItems" @completeTodo="completeTodo"></TodoAlert>
   </div>
@@ -23,7 +27,7 @@ export default {
   data() {
     return {
       search:'',
-      list:true,
+      list:false,
       todoItems: []
     }
   },
@@ -32,7 +36,11 @@ export default {
       localStorage.clear();
       this.todoItems = [];
     },
+    viewTodo(type){
+      this.list=type;
+    },
     addTodo(key, context, date, picked) { 
+      date=date.replace(/-/gi, "/");
       localStorage.setItem(key, JSON.stringify({'title':key, 'date': date,'context':context, 'isComplete':false, 'moreInfo':false, 'picked':picked})); // 키값은 todoItem,  Json으로 객체화시켜 스트링값을 넘겨줌
       this.todoItems.push({'title':key,'context':context, 'date':date, 'isComplete':false, 'moreInfo':false, 'picked':picked});//todoItem.title = todoItem , todoItem.context = context , todoItem.date = date , todoItem.isComplete = false
       },
