@@ -46,10 +46,14 @@
 		<div class = "btnsdiv">
 			<button v-for="pickbtn in buttons.pick" :key="pickbtn.title" class = "Btns" :class="pickbtn.id" 
 				:title="pickbtn.title" v-on:click="TagremoveTodo(pickbtn.id)" v-text="pickbtn.title"></button>
+			<button	v-for="vv in buttons.view" :key="vv.class" v-show="vv.type == listType" :title="vv.title" 
+						class = "Btns" :class="vv.class" v-on:click="viewTodo()">
+				<i class = "fas" :class="'fa-'+vv.class"></i>
+				</button>
 			<div class="dropdown">
 				<button class="dropbtn">정렬 
 					<i class="fa fa-caret-down"></i>
-				</button>
+				</button>				
 				<div class="dropdown-content">
 					<button	v-for="btn in buttons.sort" :key="btn.class" :title="btn.title" 
 						class = "Btns" :class="btn.class" v-on:click="sortTodo(btn.class)">
@@ -74,6 +78,7 @@
 				addModal: false,
 				picked : 'normal',
 				tagpicked : 'all',
+				listType : false,
 				sortType:'',
 				buttons:{
 					'pick':[
@@ -85,7 +90,11 @@
 					'sort':[
 						{'class':'sort-numeric-down', 'title':'날짜순으로 정렬'},
 						{'class':'bomb', 'title':'중요도순으로 정렬'},
-					]
+					],
+					'view':[
+						{'class':'calendar-alt', 'title':'달력', 'type':true},
+						{'class':'list-ul', 'title':'리스트','type':false},
+					]	
 				}
 			}
 		},
@@ -94,6 +103,12 @@
 				if (this.newTodoItem !== "") {
 					var title = this.newTodoItem && this.newTodoItem.trim();
 					var context = this.newTodoContext && this.newTodoContext.trim();
+					if(this.newTodoDate == ''){
+						var d = new Date();    
+						this.newTodoDate = this.leadingZeros(d.getFullYear(), 4) + '-' +
+								  this.leadingZeros(d.getMonth() + 1, 2) + '-' +
+									   this.leadingZeros(d.getDate(), 2) + ' ';
+					}
 					this.$emit('addTodo', title,context,this.newTodoDate,this.picked);
 					this.clearInput();
 					this.searchTodo()
@@ -127,9 +142,22 @@
 				else if(type == 'bomb')
 					this.$emit('sortTodo', 'bomb');	
 			},
+			viewTodo(){
+				this.listType=!this.listType;
+				this.$emit('viewTodo', this.listType);
+			},
 			searchTodo(){
 				var title = this.newTodoItem && this.newTodoItem.trim();
 				this.$emit('searchTodo', title);
+			},
+			leadingZeros(n, digits) {
+				var zero = '';
+				n = n.toString();
+				if (n.length < digits) {
+			        for (i = 0; i < digits - n.length; i++)
+			            zero += '0';
+				 }
+				return zero + n;
 			}
 		},
 		components: {

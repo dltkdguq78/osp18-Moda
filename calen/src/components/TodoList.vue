@@ -26,30 +26,6 @@
         </modal>
         
         <transition-group name="list" tag="ul">        
-            <modal v-if="editModal">
-            <h3 slot="header">수정</h3>
-            <span slot = "input">
-                <label>할 일</label>
-                <p style="color:#000000">{{saveTodo.title}}</p>
-                <label>마 감 날 짜</label>
-                <input type = "date" v-model="editDate">
-                <label>내 용</label>
-                <textarea id="subject" v-model="editContext" style="height:100px;"></textarea>
-                <label>중 요 도</label>
-                <div class ="importBtn">
-                    <input type="radio" id="normal" value="normal" style = "width:15px;" v-model="editimportant">
-                    <label for="normal">보통</label>
-                    <input type="radio" id="important" value="important"  style = "width:15px;" v-model="editimportant">
-                    <label for="important">중요</label>
-                    <input type="radio" id="emergency " value="emergency"  style = "width:15px;" v-model="editimportant">
-                    <label for="emergency ">긴급 </label>
-                </div>
-            </span>       
-            <span slot = "footer">   
-                <i class="ModalBtn fas fa-check" aria-hidden="true" @click="editTodo"></i>
-                <i class="ModalBtn fas fa-times" aria-hidden="true" @click ="clearInput"></i>
-            </span>
-        </modal>  
             <div v-for="(todoItem, index) in propsdata" :key="todoItem.title">
                 <div v-if="searchTodo(todoItem.title,search)">
                 <li class="shadow" :title = todoItem.context sytle="height: 50px;">
@@ -64,7 +40,7 @@
                         </div>
                         <div v-else>
                             <i class="checkBtn fas fa-check" aria-hidden="true"></i>
-                                {{ todoItem.title }}
+                            {{ todoItem.title }}
                         </div>
                     </div>
                     <div v-else>
@@ -83,8 +59,8 @@
                     </span>
                  </li>
                 <li v-show="todoItem.moreInfo">
-                    <span v-if="todoItem.context!==''" style="padding-left:10px">{{todoItem.context}}</span>
-                    <span v-if="todoItem.date!==''" style="padding:5px; margin-left : auto"> 마감 : {{todoItem.date}} </span>
+                    <span style="padding-left:10px">{{todoItem.context}}</span>
+                    <span style="padding:5px; margin-left : auto"> 마감 : {{todoItem.date}} </span>
                 </li>
                 </div>
             </div>
