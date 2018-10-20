@@ -1,7 +1,6 @@
 <template>
 	<header>
-		<h1 v-if = "!cat" @click="viewcat">To Do It!</h1>
-		<h1 v-if = "cat"> Miew! </h1>
+		<h1>To Do It!</h1>
 			<button class = "topBtn" v-on:click="onScroll">
 				<i class="fas fa-angle-double-up" aria-hidden="true"></i>
 			</button>
@@ -17,12 +16,11 @@
 	export default {
 		data() {
 			return {
-                cat: false,
-                catcount : 0
+                cat: false
 			}
         },
 		  methods: {
-			onScroll() { //top버튼 구현 수정 필요 
+			onScroll() {
     			document.body.scrollTop = 0;
     			document.documentElement.scrollTop = 0;
 			},
@@ -33,11 +31,6 @@
 					document.getElementsByClassName("topBtn")[0].style.display = "none";
 				}
    			 },
-			viewcat(){
-				this.catcount ++
-				if(this.catcount >15)
-					this.cat = true;
-			}
 		},
 		created () {
 			window.addEventListener('scroll', this.handleScroll);
